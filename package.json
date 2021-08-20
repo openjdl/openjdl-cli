@@ -1,0 +1,37 @@
+{
+  "name": "@openjdl/cli",
+  "version": "0.1.0",
+  "repository": "git@github.com:openjdl/openjdl-cli.git",
+  "author": "kidalsama <kidal@vip.qq.com>",
+  "license": "MIT",
+  "main": "bin/main",
+  "bin": {
+    "openjdl": "bin/main"
+  },
+  "dependencies": {
+    "async": "^3.2.0",
+    "chalk": "^4.1.1",
+    "cross-spawn": "^7.0.3",
+    "download-git-repo": "^3.0.2",
+    "inquirer": "^8.1.2",
+    "minimist": "^1.2.5",
+    "ora": "^5.4.1",
+    "rimraf": "^3.0.2",
+    "tildify": "^2.0.0",
+    "update-notifier": "^5.1.0",
+    "user-home": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/async": "^3.2.7",
+    "@types/chalk": "^2.2.0",
+    "@types/cross-spawn": "^6.0.2",
+    "@types/inquirer": "^7.3.3",
+    "@types/minimist": "^1.2.2",
+    "@types/ora": "^3.2.0",
+    "@types/rimraf": "^3.0.1",
+    "@types/tildify": "^2.0.2",
+    "@types/update-notifier": "^5.1.0",
+    "@types/user-home": "^2.0.0",
+    "prettier": "^2.3.2"
+  }
+}

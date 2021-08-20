@@ -1,0 +1,5 @@
+#!/usr/bin/env node
+
+require("../lib/check-node-version");
+require("../lib/check-new-version");
+require("./openjdl")
