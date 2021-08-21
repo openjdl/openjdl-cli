@@ -30,38 +30,37 @@ if (argv.help) {
   process.exit(0);
 }
 
-let download = require("download-git-repo");
-let exists = require("fs").existsSync;
-let path = require("path");
-let ora = require("ora");
-let chalk = require("chalk");
-let home = require("user-home");
-let tildify = require("tildify");
-let inquirer = require("inquirer");
-let rm = require("rimraf").sync;
-let generate = require("../lib/generate");
-let logger = require("../lib/utils/logger");
-let { isLocalPath, getTemplatePath } = require("../lib/utils/local-path");
+const download = require("download-git-repo");
+const exists = require("fs").existsSync;
+const path = require("path");
+const ora = require("ora");
+const chalk = require("chalk");
+const home = require("user-home");
+const tildify = require("tildify");
+const inquirer = require("inquirer");
+const rm = require("rimraf").sync;
+const generate = require("../lib/generate/generate");
+const logger = require("../lib/utils/logger");
+const { isLocalPath, getTemplatePath } = require("../lib/utils/local-path");
 
-let defaultTemplate = "openjdl/template-generate-";
 let template = argv.kit
   ? argv.kit.indexOf("/") > -1
     ? argv.kit
-    : `${defaultTemplate}-${argv.kit}`
-  : defaultTemplate;
-
+    : `openjdl/openjdl-generate-kit-${argv.kit}`
+  : "openjdl/openjdl-generate-kit";
 let rawName = argv._[0];
 let inPlace = !rawName || rawName === ".";
 let name = inPlace ? path.relative("../", process.cwd()) : rawName;
 let to = path.resolve(rawName || ".");
 
-if (isLocalPath(template) === true) {
-  template += `#${argv.branch || "master"}`;
+if (isLocalPath(template) !== true) {
+  template += `#${argv.branch || "main"}`;
 }
 
 let tmp = path.join(
   home,
-  ".openjdl-template-generate",
+  ".openjdl",
+  "generate-kit",
   template.replace(/[\/:]/g, "-")
 );
 if (argv.offline) {
@@ -78,8 +77,8 @@ if (inPlace || exists(to)) {
       {
         type: "confirm",
         message: inPlace
-          ? "Generate project in current directory?"
-          : "Target directory exists. Continue?",
+          ? `Generate in current directory '${to}'?`
+          : `Target directory '${to}' exists. Continue?`,
         name: "ok",
       },
     ])
@@ -89,11 +88,13 @@ if (inPlace || exists(to)) {
       }
     })
     .catch(logger.fatal);
+} else {
+  run();
 }
 
 function run() {
-  if (isLocalPath(template) === true) {
-    downloadAndGenerate(template);
+  if (isLocalPath(template) !== true) {
+    downloadAndGenerate();
     return;
   }
 
@@ -104,15 +105,18 @@ function run() {
         logger.fatal(err);
       }
       console.log();
-      logger.success('Generated "%s".', name);
+      logger.success(`Generated "${name}".`);
     });
   } else {
-    logger.fatal('Local template "%s" not found.', template);
+    logger.fatal(`Local template "${templatePath}" not found.`);
   }
 }
 
-function downloadAndGenerate(template) {
-  const spinner = ora(" Downloading Quasar starter kit");
+function downloadAndGenerate() {
+  const logMessage = `Downloading generate kit "${template}" to "${tmp}"`;
+  const spinner = ora(` Downloading`);
+
+  logger.info(logMessage);
   spinner.start();
 
   if (exists(tmp)) {
@@ -134,7 +138,7 @@ function downloadAndGenerate(template) {
       }
 
       console.log();
-      logger.success('Generated "%s".', name);
+      logger.success(`Generated "${name}".`);
     });
   });
 }
