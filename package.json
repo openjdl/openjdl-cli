@@ -8,6 +8,9 @@
   "bin": {
     "openjdl": "bin/main"
   },
+  "scripts": {
+    "release": "release-it"
+  },
   "dependencies": {
     "async": "^3.2.0",
     "chalk": "^4.1.1",
