@@ -45,6 +45,7 @@
     "@types/update-notifier": "^5.1.0",
     "@types/user-home": "^2.0.0",
     "@types/validate-npm-package-name": "^3.0.3",
-    "prettier": "^2.3.2"
+    "prettier": "^2.3.2",
+    "release-it": "*"
   }
 }
