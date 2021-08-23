@@ -5,27 +5,29 @@ let argv = minimist(process.argv.slice(2), {
     k: "kit",
     c: "clone",
     o: "offline",
+    t: "token",
     h: "help",
   },
   boolean: ["c", "o", "h"],
-  string: ["k", "b"],
+  string: ["k", "b", "t"],
 });
 
 if (argv.help) {
   console.log(`
   Description
-    Generate file from template
+    Generate files from template
     
   Usage
     $ openjdl generate [--kit <kit-name>] [--branch <version-name>]
     $ openjdl gen [--kit <kit-name>] [--branch <version-name>]
     
   Options
-    --kit, -k      Use specific starter kit
-    --branch, -b   Use specific branch of the starter kit
+    --kit, -k      Use specific kit
+    --branch, -b   Use specific branch of the kit
     --clone, -c    Use git clone
-    --offline, -o  Use a cached starter kit
-    --help, -h     Displays this message
+    --offline, -o  Use a cached kit
+    --token, -t    Gitlab private token
+    --help, -h     Displays help message
   `);
   process.exit(0);
 }
@@ -123,7 +125,17 @@ function downloadAndGenerate() {
     rm(tmp);
   }
 
-  download(template, tmp, { clone: argv.clone }, (err) => {
+  let opts = {
+    clone: argv.clone,
+  };
+
+  if (typeof argv.token === "string") {
+    opts.headers = {
+      "PRIVATE-TOKEN": "1234",
+    };
+  }
+
+  download(template, tmp, opts, (err) => {
     spinner.stop();
 
     if (err) {
