@@ -8,9 +8,6 @@
   "bin": {
     "openjdl": "bin/main"
   },
-  "scripts": {
-    "release": "release-it"
-  },
   "dependencies": {
     "async": "^3.2.0",
     "chalk": "^4.1.1",
@@ -48,7 +45,6 @@
     "@types/update-notifier": "^5.1.0",
     "@types/user-home": "^2.0.0",
     "@types/validate-npm-package-name": "^3.0.3",
-    "prettier": "^2.3.2",
-    "release-it": "*"
+    "prettier": "^2.3.2"
   }
 }
