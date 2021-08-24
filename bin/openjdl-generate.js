@@ -16,11 +16,11 @@ if (argv.help) {
   console.log(`
   Description
     Generate files from template
-    
+
   Usage
     $ openjdl generate [--kit <kit-name>] [--branch <version-name>]
     $ openjdl gen [--kit <kit-name>] [--branch <version-name>]
-    
+
   Options
     --kit, -k      Use specific kit
     --branch, -b   Use specific branch of the kit
