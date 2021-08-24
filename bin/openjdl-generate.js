@@ -131,7 +131,7 @@ function downloadAndGenerate() {
 
   if (typeof argv.token === "string") {
     opts.headers = {
-      "PRIVATE-TOKEN": "1234",
+      "PRIVATE-TOKEN": argv.token,
     };
   }
 
